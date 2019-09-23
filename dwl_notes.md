@@ -2,9 +2,9 @@
 
 ### 1. RBDL API Error
 
-RBDL库更新，函数更换
+RBDL库更新，函数更换,形参和实参需要对应
 
-![](assets/markdown-img-paste-20190923193139191.png)
+![](assets/markdown-img-paste-20190923213139795.png)
 
 
 ### 2. Yaml-CPP Error
