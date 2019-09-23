@@ -296,14 +296,14 @@ void FloatingBaseInverseDynamics(RigidBodyDynamics::Model& model,
 				model.f[i].setZero();
 			}
 
-			if (f_ext != NULL && (*f_ext)[i] != SpatialVectorZero)
+			if (f_ext != NULL && (*f_ext)[i] != SpatialVector::Zero())
 				model.f[i] -= model.X_base[i].toMatrixAdjoint() * (*f_ext)[i];
 		}
 
 		// Second pass
 		model.Ic[6] = model.I[6];
 		model.f[6] = model.I[6] * model.a[6] + crossf(model.v[6],model.I[6] * model.v[6]);
-		if (f_ext != NULL && (*f_ext)[6] != SpatialVectorZero)
+		if (f_ext != NULL && (*f_ext)[6] != SpatialVector::Zero())
 			model.f[6] -= (*f_ext)[6];
 
 		for (unsigned int i = model.mBodies.size() - 1; i > 6; i--) {
@@ -384,7 +384,7 @@ void FloatingBaseInverseDynamics(RigidBodyDynamics::Model& model,
 			model.f[i].setZero();
 		}
 
-		if (f_ext != NULL && (*f_ext)[i] != SpatialVectorZero)
+		if (f_ext != NULL && (*f_ext)[i] != SpatialVector::Zero())
 			model.f[i] -= model.X_base[i].toMatrixAdjoint() * (*f_ext)[i];
 	}
 
@@ -392,7 +392,7 @@ void FloatingBaseInverseDynamics(RigidBodyDynamics::Model& model,
 	model.Ic[base_dof] = model.I[base_dof];
 	model.f[base_dof] = model.I[base_dof] * model.a[base_dof] +
 			crossf(model.v[base_dof],model.I[base_dof] * model.v[base_dof]);
-	if (f_ext != NULL && (*f_ext)[base_dof] != SpatialVectorZero)
+	if (f_ext != NULL && (*f_ext)[base_dof] != SpatialVector::Zero())
 		model.f[base_dof] -= (*f_ext)[base_dof];
 
 	for (unsigned int i = model.mBodies.size() - 1; i > base_dof; i--) {

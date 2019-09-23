@@ -347,36 +347,36 @@ const Eigen::Vector3d& FloatingBaseSystem::getGravityDirection() const
 }
 
 
-const Eigen::Vector3d& FloatingBaseSystem::getSystemCoM(const rbd::Vector6d& base_pos,
-														const Eigen::VectorXd& joint_pos)
-{
-	Eigen::VectorXd q = toGeneralizedJointState(base_pos, joint_pos);
-	Eigen::VectorXd qd = Eigen::VectorXd::Zero(num_system_joints_);
+// const Eigen::Vector3d& FloatingBaseSystem::getSystemCoM(const rbd::Vector6d& base_pos,
+// 														const Eigen::VectorXd& joint_pos)
+// {
+// 	Eigen::VectorXd q = toGeneralizedJointState(base_pos, joint_pos);
+// 	Eigen::VectorXd qd = Eigen::VectorXd::Zero(num_system_joints_);
 
-	double mass;
-	RigidBodyDynamics::Utils::CalcCenterOfMass(rbd_model_,
-											   q, qd, mass,
-											   com_system_);
+// 	double mass;
+// 	RigidBodyDynamics::Utils::CalcCenterOfMass(rbd_model_,
+// 											   q, qd, mass,
+// 											   com_system_);
 
-	return com_system_;
-}
+// 	return com_system_;
+// }
 
 
-const Eigen::Vector3d& FloatingBaseSystem::getSystemCoMRate(const rbd::Vector6d& base_pos,
-															const Eigen::VectorXd& joint_pos,
-															const rbd::Vector6d& base_vel,
-															const Eigen::VectorXd& joint_vel)
-{
-	Eigen::VectorXd q = toGeneralizedJointState(base_pos, joint_pos);
-	Eigen::VectorXd qd = toGeneralizedJointState(base_vel, joint_vel);
+// const Eigen::Vector3d& FloatingBaseSystem::getSystemCoMRate(const rbd::Vector6d& base_pos,
+// 															const Eigen::VectorXd& joint_pos,
+// 															const rbd::Vector6d& base_vel,
+// 															const Eigen::VectorXd& joint_vel)
+// {
+// 	Eigen::VectorXd q = toGeneralizedJointState(base_pos, joint_pos);
+// 	Eigen::VectorXd qd = toGeneralizedJointState(base_vel, joint_vel);
 
-	double mass;
-	RigidBodyDynamics::Utils::CalcCenterOfMass(rbd_model_,
-											   q, qd, mass,
-											   com_system_, &comd_system_);
+// 	double mass;
+// 	RigidBodyDynamics::Utils::CalcCenterOfMass(rbd_model_,
+// 											   q, qd, mass,
+// 											   com_system_, &comd_system_);
 
-	return comd_system_;
-}
+// 	return comd_system_;
+// }
 
 
 const Eigen::Vector3d& FloatingBaseSystem::getFloatingBaseCoM() const
