@@ -183,7 +183,7 @@ void FloatingBaseSystem::resetSystemDescription(const std::string& filename)
 		using namespace std::placeholders;
 		std::sort(foot_names_.begin(),
 				  foot_names_.end(),
-				  std::bind(&FloatingBaseSystem::compareString, this, _1, _2)); 
+				  std::bind(&FloatingBaseSystem::compareString, this, _1, _2));
 
 		// Getting the number of foot
 		num_feet_ = foot_names_.size();
@@ -346,38 +346,51 @@ const Eigen::Vector3d& FloatingBaseSystem::getGravityDirection() const
 	return grav_dir_;
 }
 
+//Eric_wang: RBDL API Changed
+//RBDL_DLLAPI void CalcCenterOfMass	(	Model & 	model,
+//							const Math::VectorNd & 	q,
+//							const Math::VectorNd & 	qdot,
+//							const Math::VectorNd * 	qddot,
+//							double & 	mass,
+//							Math::Vector3d & 	com,
+//							Math::Vector3d * 	com_velocity = NULL,
+//							Math::Vector3d * 	com_acceleration = NULL,
+//							Math::Vector3d * 	angular_momentum = NULL,
+//							Math::Vector3d * 	change_of_angular_momentum = NULL,
+//							bool 	update_kinematics = true
+//							)
 
-// const Eigen::Vector3d& FloatingBaseSystem::getSystemCoM(const rbd::Vector6d& base_pos,
-// 														const Eigen::VectorXd& joint_pos)
-// {
-// 	Eigen::VectorXd q = toGeneralizedJointState(base_pos, joint_pos);
-// 	Eigen::VectorXd qd = Eigen::VectorXd::Zero(num_system_joints_);
+ const Eigen::Vector3d& FloatingBaseSystem::getSystemCoM(const rbd::Vector6d& base_pos,
+ 														const Eigen::VectorXd& joint_pos)
+ {
+ 	Eigen::VectorXd q = toGeneralizedJointState(base_pos, joint_pos);
+ 	Eigen::VectorXd qd = Eigen::VectorXd::Zero(num_system_joints_);
 
-// 	double mass;
-// 	RigidBodyDynamics::Utils::CalcCenterOfMass(rbd_model_,
-// 											   q, qd, mass,
-// 											   com_system_);
+ 	double mass;
+ 	RigidBodyDynamics::Utils::CalcCenterOfMass(rbd_model_,
+ 											   q, qd, NULL, mass,
+ 											   com_system_);
 
-// 	return com_system_;
-// }
+ 	return com_system_;
+ }
 
 
-// const Eigen::Vector3d& FloatingBaseSystem::getSystemCoMRate(const rbd::Vector6d& base_pos,
-// 															const Eigen::VectorXd& joint_pos,
-// 															const rbd::Vector6d& base_vel,
-// 															const Eigen::VectorXd& joint_vel)
-// {
-// 	Eigen::VectorXd q = toGeneralizedJointState(base_pos, joint_pos);
-// 	Eigen::VectorXd qd = toGeneralizedJointState(base_vel, joint_vel);
+ const Eigen::Vector3d& FloatingBaseSystem::getSystemCoMRate(const rbd::Vector6d& base_pos,
+ 															const Eigen::VectorXd& joint_pos,
+ 															const rbd::Vector6d& base_vel,
+ 															const Eigen::VectorXd& joint_vel)
+ {
+ 	Eigen::VectorXd q = toGeneralizedJointState(base_pos, joint_pos);
+ 	Eigen::VectorXd qd = toGeneralizedJointState(base_vel, joint_vel);
 
-// 	double mass;
-// 	RigidBodyDynamics::Utils::CalcCenterOfMass(rbd_model_,
-// 											   q, qd, mass,
-// 											   com_system_, &comd_system_);
+ 	double mass;
+ 	RigidBodyDynamics::Utils::CalcCenterOfMass(rbd_model_,
+ 											   q, qd, NULL, mass,
+ 											   com_system_, &comd_system_);
 
-// 	return comd_system_;
-// }
-
+ 	return comd_system_;
+ }
+/////////////////////////////////
 
 const Eigen::Vector3d& FloatingBaseSystem::getFloatingBaseCoM() const
 {
@@ -786,7 +799,7 @@ const Eigen::VectorXd& FloatingBaseSystem::getDefaultPosture() const
 bool FloatingBaseSystem::compareString(std::string a, std::string b)
 {
 	return a < b;
-} 
+}
 
 } //@namespace model
 } //@namespace dwl

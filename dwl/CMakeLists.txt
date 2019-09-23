@@ -30,12 +30,12 @@ include_directories(${YAMLCPP_INCLUDE_DIRS})
 set(${PROJECT_NAME}_SOURCES  dwl/WholeBodyState.cpp
 							 dwl/ReducedBodyState.cpp
 							 dwl/RobotStates.cpp
-							 dwl/locomotion/PlanningOfMotionSequence.cpp 
+							 dwl/locomotion/PlanningOfMotionSequence.cpp
 							 dwl/locomotion/HierarchicalPlanning.cpp
 							 dwl/locomotion/MotionPlanning.cpp
 							 dwl/locomotion/ContactPlanning.cpp
 							 dwl/locomotion/WholeBodyTrajectoryOptimization.cpp
-							 dwl/solver/SearchTreeSolver.cpp	
+							 dwl/solver/SearchTreeSolver.cpp
 							 dwl/solver/OptimizationSolver.cpp
 							 dwl/solver/Dijkstrap.cpp
 							 dwl/solver/AStar.cpp
@@ -72,6 +72,7 @@ set(${PROJECT_NAME}_SOURCES  dwl/WholeBodyState.cpp
 							 dwl/environment/TerrainMap.cpp
 							 dwl/environment/SpaceDiscretization.cpp
 							 dwl/environment/Feature.cpp
+						   dwl/environment/ObstacleMap.cpp
 							 dwl/robot/Robot.cpp
 							 dwl/utils/Geometry.cpp
 							 dwl/utils/Algebra.cpp
@@ -88,7 +89,7 @@ if (qpoases_FOUND)
 	list(APPEND DEPENDENCIES_INCLUDE_DIRS  ${QPOASES_INCLUDE_DIRS})
 	list(APPEND DEPENDENCIES_LIBRARY_DIRS  ${QPOASES_LIBRARY_DIR})
 	list(APPEND DEPENDENCIES_LIBRARIES  ${QPOASES_LIBRARIES})
-    
+
 	include_directories(${QPOASES_INCLUDE_DIRS})
 	set(${PROJECT_NAME}_SOURCES  ${${PROJECT_NAME}_SOURCES}
 								 dwl/solver/qpOASES.cpp)
@@ -111,7 +112,7 @@ if(LIBCMAES_FOUND)
 	list(APPEND DEPENDENCIES_INCLUDE_DIRS  ${LIBCMAES_INCLUDE_DIRS})
 	list(APPEND DEPENDENCIES_LIBRARY_DIRS  ${LIBCMAES_LIBRARY_DIR})
 	list(APPEND DEPENDENCIES_LIBRARIES  ${LIBCMAES_LIBRARIES} glog)
-    
+
 	include_directories(${LIBCMAES_INCLUDE_DIRS})
 	set(${PROJECT_NAME}_SOURCES  ${${PROJECT_NAME}_SOURCES}
 								 dwl/solver/cmaesSOFamily.cpp)
@@ -119,7 +120,7 @@ endif()
 
 # Adding Octomap components of the project
 if(octomap_FOUND)
-	include_directories(${OCTOMAP_INCLUDE_DIRS}) 
+	include_directories(${OCTOMAP_INCLUDE_DIRS})
 	list(APPEND ${PROJECT_NAME}_SOURCES  dwl/environment/ObstacleMap.cpp)
 endif()
 
@@ -143,7 +144,7 @@ export(PACKAGE dwl)
 if(WITH_CATKIN)
 	catkin_package(
 		INCLUDE_DIRS . ${DEPENDENCIES_INCLUDE_DIRS}
-		LIBRARIES  ${PROJECT_NAME} 
+		LIBRARIES  ${PROJECT_NAME}
 		DEPENDS  ${DEPENDENCIES_LIBRARIES}
 		         ${DEPENDENCIES_LIBRARY_DIRS}
 		         ${DEPENDENCIES_INCLUDE_DIRS})
